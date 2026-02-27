@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>&lt;model-viewer&gt; template</title>
+    <meta charset="utf-8">
+    <meta name="description" content="&lt;model-viewer&gt; template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+HTML
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>NHG Model Viewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+      body { margin: 0; padding: 0; background-color: #ffffff; overflow: hidden; }
+
+      
+      #nhgLogo {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 270px; 
+        z-index: 1000;
+        display: block;
+      }
+
+      model-viewer {
+        width: 100vw;
+        height: 100vh;
+        --poster-color: transparent;
+      }
+
+      /* Controls Styling */
+      .view-buttons {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+      }
+
+      .controls-panel {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 999;
+        font-family: sans-serif;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      button { cursor: pointer; margin: 2px; }
+    </style>
+  </head>
+  <body>
+
+    <img src="NHG%20LOGO.png" id="nhgLogo" alt="NHG Logo">
+    <!-- <model-viewer> HTML element -->
+    <model-viewer src="FINALLL.glb" ar ar-modes="scene-viewer webxr quick-look" camera-controls tone-mapping="neutral" poster="poster.png" shadow-intensity="1" camera-orbit="517deg 82.03deg 358.9m" field-of-view="30deg" id="gear">
+
+      <button class="Hotspot" slot="hotspot-1" data-surface="0 0 117 118 119 0.406 0.327 0.268" data-visibility-attribute="visible"onMouseOver="addhotspot1()"  onMouseOut="removehotspot1()">
+          <div class="HotspotAnnotation" id="hotspot1"style="visibility:hidden">Cover</div>
+      </button>
+
+<button class="Hotspot" slot="hotspot-2" data-surface="1 0 1548 1456 1457 0.667 0.316 0.018" data-visibility-attribute="visible"onMouseOver="addhotspot2()"  onMouseOut="removehotspot2()">
+          <div class="HotspotAnnotation"  id="hotspot2"style="visibility:hidden">Wire Organizer</div>
+      </button>
+<button class="Hotspot" slot="hotspot-3" data-surface="2 0 1665 1666 1667 0.608 0.361 0.032" data-visibility-attribute="visible"onMouseOver="addhotspot3()"  onMouseOut="removehotspot3()">
+          <div class="HotspotAnnotation"id="hotspot3"
+  style="visibility:hidden"
+ >Case</div>
+      </button>
+
+
+      <div class="progress-bar hide" slot="progress-bar">
+          <div class="update-bar"></div>
+      </div>
+      <button slot="ar-button" id="ar-button">
+          View in your space
+      </button>
+      <div id="ar-prompt">
+          
+      </div>
+
+<div style="position: absolute; top: 250px; right: 20px; z-index: 999; display: flex; flex-direction: column; gap: 15px; background: rgba(255, 255, 255, 0.85); padding: 15px; border-radius: 8px; width: 220px; text-align: right; font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+
+  <div>
+    <strong style="color: #005a9c;">Views</strong>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 5px;">
+      <button style="padding: 5px; cursor: pointer;" onClick="setOrbit('179.6deg 0deg 358.9m')">Top</button>
+      <button style="padding: 5px; cursor: pointer;" onClick="setOrbit('147deg 129.2deg 358.9m')">Bottom</button>
+      <button style="padding: 5px; cursor: pointer;" onClick="setOrbit('91.45deg 84.2deg 358.9m')">Left</button>
+      <button style="padding: 5px; cursor: pointer;" onClick="setOrbit('-1.831deg 81.62deg 358.9m')">Back</button>
+      <button style="padding: 5px; cursor: pointer;" onClick="setOrbit('-90.66deg 79.04deg 358.9m')">Right</button>
+      <button style="padding: 5px; cursor: pointer;" onClick="setOrbit('-180.4deg 81.38deg 358.9m')">Front</button>
+    </div>
+  </div>
+
+  <hr style="border: 0; border-top: 1px solid #ccc; margin: 5px 0;">
+
+  <div>
+    <strong style="color: #005a9c;">Variant</strong>
+    <div style="display: flex; gap: 5px; justify-content: flex-end; margin-top: 5px;">
+      <button style="padding: 5px 10px; cursor: pointer;" onClick="VBtn01()">01</button>
+      <button style="padding: 5px 10px; cursor: pointer;" onClick="VBtn02()">02</button>
+      <button style="padding: 5px 10px; cursor: pointer;" onClick="VBtn03()">03</button>
+    </div>
+  </div>
+
+  <hr style="border: 0; border-top: 1px solid #ccc; margin: 5px 0;">
+
+  <div>
+    <strong style="color: #005a9c;">Animation</strong>
+    <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 5px;">
+      <button style="padding: 6px; cursor: pointer;" id="default1Btn" onClick="Btn01()">Move Cover</button>
+      <button style="padding: 6px; cursor: pointer;" id="default2Btn" onClick="Btn02()">Spin Case</button>
+      <button style="padding: 6px; cursor: pointer;" id="default3Btn" onClick="Btn03()">Move Wire Organizer</button>
+    </div>
+  </div>
+
+</div>    </model-viewer>
+
+
+<script>
+    function VBtn01() {
+  document.getElementById('gear').variantName = "v1"; 
+ }
+  function VBtn02() {
+  document.getElementById('gear').variantName = "v2";
+}
+  function VBtn03() {
+  document.getElementById('gear').variantName = "v3";
+}
+
+
+function Btn01()
+  {document.getElementById('gear').pause();
+  document.getElementById('gear').animationName = "coveraction";
+  document.getElementById('gear').play(); }
+
+  function Btn02()
+  {document.getElementById('gear').pause();
+  document.getElementById('gear').animationName = "wire organiserAction";
+  document.getElementById('gear').play(); }
+
+  function Btn03()
+  {document.getElementById('gear').pause();
+  document.getElementById('gear').animationName = "caseAction";
+  document.getElementById('gear').play(); }
+
+  function pauseAnimation()
+  { document.getElementById('gear').pause(); }
+  
+
+function setOrbit(orbit)
+
+  {document.getElementById('gear').cameraOrbit = orbit;}
+
+
+
+  function addhotspot1(){
+  document.getElementById("hotspot1").style.visibility="visible"
+  }	
+  function removehotspot1(){
+  document.getElementById("hotspot1").style.visibility="hidden";
+  }
+
+function addhotspot2(){
+  document.getElementById("hotspot2").style.visibility="visible"
+  }
+  function removehotspot2(){
+  document.getElementById("hotspot2").style.visibility="hidden";
+  }
+function addhotspot3(){
+  document.getElementById("hotspot3").style.visibility="visible"
+  }
+  function removehotspot3(){
+  document.getElementById("hotspot3").style.visibility="hidden";
+  }
+  </script>
+  
+    <script src="script.js"></script>
+    <!-- Loads <model-viewer> for browsers: -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+  </body>
+</html>
